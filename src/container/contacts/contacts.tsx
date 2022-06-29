@@ -13,15 +13,12 @@ const Contacts = () => {
     const dispatch = useDispatch();
     const [showModel, setShowModel] = useState(false);
     const [contactsList, setContactsList] = useState([]);
-    //@ts-ignore
-    const contactList = useSelector(state => state?.contacts?.contacts);
-    debugger
+    const contactList = useSelector((state: any) => state?.contacts?.contacts);
     useEffect(() => {
         dispatch(getContactsAction())
     }, []);
 
     useEffect(() => {
-        debugger
         setContactsList(contactList)
     }, [contactList]);
 

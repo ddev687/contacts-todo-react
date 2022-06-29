@@ -6,7 +6,6 @@ import Register from './container/auth/register';
 import Login from './container/auth/login';
 import PrivateRoute from './utils/privateRoute';
 import Contacts from './container/contacts/contacts';
-import AddContacts from './container/contacts/addContact';
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
           <Route path='/' element={< Login />}></Route>
           <Route path='/register' element={< Register />}></Route>
           <Route path='/contacts' element={<PrivateRoute> <Contacts /></PrivateRoute>}></Route>
-          <Route path='/add-contacts' element={<PrivateRoute> <AddContacts /></PrivateRoute>}></Route>
         </Routes>
       </div>
     </Router>

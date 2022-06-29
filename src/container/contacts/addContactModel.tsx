@@ -8,6 +8,8 @@ const AddContactModel = ({ showModel, addContact, closeModel }: any) => {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
+    const loading = useSelector((state: any) => state?.contacts?.isLoading);
+    const error = useSelector((state: any) => state?.contacts?.error);
     const handleClose = () => {
         closeModel();
     }
@@ -15,12 +17,6 @@ const AddContactModel = ({ showModel, addContact, closeModel }: any) => {
     useEffect(() => {
         setShow(showModel)
     }, [showModel])
-
-    //@ts-ignore
-    const loading = useSelector(state => state?.contacts?.isLoading);
-
-    //@ts-ignore
-    const error = useSelector(state => state?.contacts?.error);
 
     useEffect(() => {
         setIsLoading(loading || false)
@@ -35,14 +31,14 @@ const AddContactModel = ({ showModel, addContact, closeModel }: any) => {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         event.stopPropagation();
-        if (!event.target[1].value || !event.target[2].value || !event.target[3].value) {
+        if (!event.target[0].value || !event.target[1].value || !event.target[2].value) {
             setValidated(true)
         } else {
             setValidated(false)
             const contact: IContact = {
-                fullName: event.target[1].value,
-                email: event.target[2].value,
-                phoneNumber: event.target[3].value
+                fullName: event.target[0].value,
+                email: event.target[1].value,
+                phoneNumber: event.target[2].value
             }
             addContact(contact);
         }
@@ -93,7 +89,7 @@ const AddContactModel = ({ showModel, addContact, closeModel }: any) => {
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
-                        <CustomButton buttonVariant="secondary" buttonText="Close" onClick={handleClose}/>
+                        <CustomButton buttonVariant="secondary" buttonText="Close" onClick={handleClose} />
                         <Button variant="primary" disabled={isLoading} type="submit">
                             {isLoading && <Spinner
                                 as="span"
