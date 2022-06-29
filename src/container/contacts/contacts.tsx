@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Nav, Navbar, Table } from 'react-bootstrap';
+import { Container, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContactsAction, deleteContactsAction, getContactsAction } from '../../actions/contacts/contacts';
 import { logoutUserAction } from '../../actions/auth/auth';
 
 import { IContact } from '../../actions/contacts/types';
 import AddContactModel from './addContactModel';
+import ListContacts from '../../components/listContact';
+import CustomButton from '../../components/button';
 
 const Contacts = () => {
     const dispatch = useDispatch();
@@ -13,11 +15,13 @@ const Contacts = () => {
     const [contactsList, setContactsList] = useState([]);
     //@ts-ignore
     const contactList = useSelector(state => state?.contacts?.contacts);
+    debugger
     useEffect(() => {
         dispatch(getContactsAction())
     }, []);
 
     useEffect(() => {
+        debugger
         setContactsList(contactList)
     }, [contactList]);
 
@@ -53,43 +57,17 @@ const Contacts = () => {
                         <Navbar.Brand href="#home">Contacts List</Navbar.Brand>
                         <Navbar.Toggle />
                         <Navbar.Collapse className="justify-content-end">
-                            <Button variant="primary" onClick={addContact}>
-                                Add Contact
-                            </Button>
+                            <CustomButton onClick={addContact} buttonVariant="primary" buttonText="Add Contact" />
                         </Navbar.Collapse>
                         <Navbar.Collapse className="justify-content-end">
-                            <Button variant="primary" onClick={logout}>
-                                Logout
-                            </Button>
+                            <CustomButton onClick={logout} buttonVariant="primary" buttonText="Logout" />
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
             </>
             <br></br>
-            <Table responsive>
-                <thead>
-                    <tr>
-                        <th key="fullName">Full Name</th>
-                        <th key="email">Email</th>
-                        <th key="phonenumber">Phone Number</th>
-                        <th key="action">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {contactsList.map((contact: IContact, index: number) =>
-                        <tr key={index}>
-                            <td key={`${contact.id}_${contact.fullName}`}>{contact.fullName}</td>
-                            <td key={`${contact.id}_${contact.email}`}>{contact.email}</td>
-                            <td key={`${contact.id}_${contact.phoneNumber}`}>{contact.phoneNumber}</td>
-                            <td key={`${contact.id}_${index}`}>
-                                <Button variant="danger" onClick={() => deleteContact(contact?.id)}>
-                                    Delete
-                                </Button>
-                            </td>
-                        </tr>)}
-                </tbody>
-            </Table>
-            <AddContactModel showModel={showModel} addContact={saveContact} closeModel={closeModel}/>
+            <ListContacts contactsList={contactsList} deleteContact={deleteContact} />
+            <AddContactModel showModel={showModel} addContact={saveContact} closeModel={closeModel} />
         </div>
     );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { Button, Modal, Form, Spinner, Alert } from "react-bootstrap";
 import { IContact } from "../../actions/contacts/types";
+import CustomButton from "../../components/button";
 
 const AddContactModel = ({ showModel, addContact, closeModel }: any) => {
     const [show, setShow] = useState(false);
@@ -51,7 +52,7 @@ const AddContactModel = ({ showModel, addContact, closeModel }: any) => {
         <>
             <Modal show={show}>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title>Add Contact</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -92,9 +93,7 @@ const AddContactModel = ({ showModel, addContact, closeModel }: any) => {
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
+                        <CustomButton buttonVariant="secondary" buttonText="Close" onClick={handleClose}/>
                         <Button variant="primary" disabled={isLoading} type="submit">
                             {isLoading && <Spinner
                                 as="span"

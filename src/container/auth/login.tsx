@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { loginUserAction } from '../../actions/auth/auth';
 import { loginUserRequest } from '../../actions/auth/types';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alert, Card } from 'react-bootstrap';
+import CustomButton from '../../components/button';
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const error = useSelector((state: any) => state?.auth?.error);
+    const isLoggedIn = useSelector((state: any) => state?.auth?.isLoggedIn)
     const [validated, setValidated] = useState(false);
     const handleSubmit = (event: any) => {
         event.preventDefault();
@@ -24,12 +26,6 @@ const Login = () => {
             dispatch(loginUserAction(user));
         }
     };
-
-    //@ts-ignore
-    const error = useSelector(state => state?.auth?.error);
-
-    // @ts-ignore
-    const isLoggedIn = useSelector(state => state?.auth?.isLoggedIn)
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -72,9 +68,7 @@ const Login = () => {
                         <Form.Label>Don't have account? <Link to='/register'>Register here</Link></Form.Label>
                     </Form.Group>
                     <br />
-                    <Button variant="primary" type="submit">
-                        Login
-                    </Button>
+                    <CustomButton buttonVariant="primary" buttonText="Login" type="submit"/>
                 </Form>
             </Card>
         </div>

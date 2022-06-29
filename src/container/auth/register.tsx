@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { registerUserAction } from '../../actions/auth/auth';
 import { IUser } from '../../actions/auth/types';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alert, Card } from 'react-bootstrap';
+import CustomButton from '../../components/button';
 
 const Register = () => {
     const [validated, setValidated] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const error = useSelector((state: any) => state?.auth?.error);
+    const registerSuccess = useSelector((state: any) => state?.auth?.registerSuccess);
     const handleSubmit = (event: any) => {
         event.preventDefault();
         event.stopPropagation();
@@ -27,12 +29,6 @@ const Register = () => {
             setValidated(true);
         }
     };
-
-    //@ts-ignore
-    const error = useSelector(state => state?.auth?.error);
-
-    //@ts-ignore
-    const registerSuccess = useSelector(state => state?.auth?.registerSuccess);
 
     useEffect(() => {
         if(registerSuccess) navigate('/')
@@ -83,9 +79,7 @@ const Register = () => {
                         <Form.Label>Already have account? <Link to='/'>Login here</Link></Form.Label>
                     </Form.Group>
                     <br />
-                    <Button variant="primary" type="submit">
-                        Register
-                    </Button>
+                    <CustomButton buttonVariant="primary" buttonText="Register" type="submit"/>
                 </Form>
             </Card>
         </div>

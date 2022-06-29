@@ -1,4 +1,3 @@
-import { loginUserRequest } from "../../actions/auth/types";
 import { IContact } from "../../actions/contacts/types";
 import API from '../../api/api'
 
